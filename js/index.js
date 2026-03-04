@@ -15,9 +15,20 @@ function fecharMenu() {
   menu.classList.add("-left-[80%]");
 }
 
-async function buscarImoveis() {
-  try {
-    const request = await fetch("http://localhost:3000/imoveis");
+function filtrarPreco() {
+    let input1 = document.querySelector("#precode").value
+    let input2 = document.querySelector("#precoate").value
+
+    let newPesquisa = imoveis.filter(element => {
+        return element.valor > input1 && element.valor < input2
+    })
+    carregarImoveis(newPesquisa)
+}
+
+
+async function buscarImoveis(){
+    try {
+        const request = await fetch("http://localhost:3000/imoveis");
 
     if (!request.ok) {
       alert("Falha ao buscar imóveis");
@@ -97,4 +108,27 @@ function filtragem(quartos) {
     (imoveis) => imoveis.quartos == quartos,
   );
   carregarImoveis(imoveisfiltrados);
+    })
+}
+
+function filtrarCasa(){
+    let casasFiltradas = imoveis.filter(imovel => imovel.tipo === "Casa");
+    carregarImoveis(casasFiltradas);
+
+}
+
+
+function filtrarApartamento(){
+
+    let apsFiltrados = imoveis.filter(imovel => imovel.tipo === "Apartamento");
+    carregarImoveis(apsFiltrados);
+
+     
+}
+
+}
+function filtrarGaragem(numero){
+    let imoveisFiltrados = imoveis.filter(imovel => imovel.garagens == numero);
+    carregarImoveis(imoveisFiltrados);   
+ 
 }

@@ -1,18 +1,18 @@
 let imoveis = [];
 
-function abrirMenu(){
-    let overlay = document.querySelector("#overlay");
-    let menu = document.querySelector("#menu");
+function abrirMenu() {
+  let overlay = document.querySelector("#overlay");
+  let menu = document.querySelector("#menu");
 
-    overlay.classList.remove("invisible", "opacity-0");
-    menu.classList.remove("-left-[80%]");
-    menu.classList.add("left-0");
+  overlay.classList.remove("invisible", "opacity-0");
+  menu.classList.remove("-left-[80%]");
+  menu.classList.add("left-0");
 }
-function fecharMenu(){
-    let overlay = document.querySelector("#overlay");
-    overlay.classList.add("invisible", "opacity-0");
-    menu.classList.remove("left-0");
-    menu.classList.add("-left-[80%]");
+function fecharMenu() {
+  let overlay = document.querySelector("#overlay");
+  overlay.classList.add("invisible", "opacity-0");
+  menu.classList.remove("left-0");
+  menu.classList.add("-left-[80%]");
 }
 
 function filtrarPreco() {
@@ -30,18 +30,17 @@ async function buscarImoveis(){
     try {
         const request = await fetch("http://localhost:3000/imoveis");
 
-        if(!request.ok){
-            alert("Falha ao buscar imóveis");
-            return
-        }
-
-         imoveis = await request.json();
-        
-        carregarImoveis(imoveis);
-
-    } catch (error) {
-        alert(`Aviso: ${error.message}`);
+    if (!request.ok) {
+      alert("Falha ao buscar imóveis");
+      return;
     }
+
+    imoveis = await request.json();
+
+    carregarImoveis(imoveis);
+  } catch (error) {
+    alert(`Aviso: ${error.message}`);
+  }
 }
 
 buscarImoveis();
@@ -51,12 +50,12 @@ buscarImoveis();
  * @param {Array} listaDeImoveis array de imoveis
  */
 
-function carregarImoveis(listaDeImoveis){
-    let cards = document.querySelector("#cards");
-    cards.innerHTML = "";
+function carregarImoveis(listaDeImoveis) {
+  let cards = document.querySelector("#cards");
+  cards.innerHTML = "";
 
-    listaDeImoveis.map(imovel => {
-        cards.innerHTML += `
+  listaDeImoveis.map((imovel) => {
+    cards.innerHTML += `
             <div class="border border-gray-300 rounded-2xl flex mb-4 flex-col md:flex-row overflow-hidden">
                 <img src="${imovel.imagem}" alt="imagemCasa" class="w-100 h-72 object-cover">
                 <div class="p-4 flex-1">
@@ -101,6 +100,14 @@ function carregarImoveis(listaDeImoveis){
                 </div>
             </div>
         `;
+  });
+}
+
+function filtragem(quartos) {
+  const imoveisfiltrados = imoveis.filter(
+    (imoveis) => imoveis.quartos == quartos,
+  );
+  carregarImoveis(imoveisfiltrados);
     })
 }
 

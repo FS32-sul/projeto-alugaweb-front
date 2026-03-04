@@ -35,7 +35,7 @@ async function buscarImoveis(){
             return
         }
 
-        imoveis = await request.json();
+         imoveis = await request.json();
         
         carregarImoveis(imoveis);
 
@@ -102,6 +102,22 @@ function carregarImoveis(listaDeImoveis){
             </div>
         `;
     })
+}
+
+function filtrarCasa(){
+    let casasFiltradas = imoveis.filter(imovel => imovel.tipo === "Casa");
+    carregarImoveis(casasFiltradas);
+
+}
+
+
+function filtrarApartamento(){
+
+    let apsFiltrados = imoveis.filter(imovel => imovel.tipo === "Apartamento");
+    carregarImoveis(apsFiltrados);
+
+     
+}
 
 }
 function filtrarGaragem(numero){
